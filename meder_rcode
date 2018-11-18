@@ -1,0 +1,35 @@
+ag = USFarmersMarkets
+
+plot(agMap, xlim = c(-180, -50), ylim = c(15, 80), asp = 1)
+points(ag$x, ag$y, col = "red", cex = .6)
+
+
+fullData = USFarmersMarkets
+
+ag <- fullData[which(fullData$State == "Ohio"),names(fullData) %in% c("FMID","MarketName","city", "County", "State", "zip","x","y", "WIC", "Vegetables", "Fruits")]
+agMap = getMap(resolution = "low")
+plot(agMap, xlim = c(-85, -80), ylim = c(38, 43), asp = 1)
+points(ag$x, ag$y, col = "red", cex = .6)
+
+install.packages("usmap")
+install.packages("ggplot2")
+library(usmap)
+library(ggplot2)
+plot_usmap(include = c("OH"))
+points(ag$x, ag$y, col = "red", cex = .6)
+
+
+map(database = "county", regions = "ohio", fill = FALSE)
+points(ag$x, ag$y, col = "red", cex = .4)
+
+#benny's stuff
+OHPerCapIncomeData <- read_csv("Downloads/OHPerCapIncomeData.csv")
+View(OHPerCapIncomeData)
+
+OH3YrAvg <- (OHPerCapIncomeData$`Per capita personal income Dollars 2015`+
+               OHPerCapIncomeData$`Per capita personal income Dollars 2016`+
+               OHPerCapIncomeData$`Per capita personal income Dollars 2017`)/3
+
+
+OHPerCaptiaAvg <- data.frame(OHPerCapIncomeData$`Ohio Counties`,OH3YrAvg)
+names(OHPerCaptiaAvg) <- c("County/State","Avg. Per capita personal income (Dollars) 2015-17")
