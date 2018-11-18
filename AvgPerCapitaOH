@@ -1,0 +1,21 @@
+#Ben Plzak & Zack Meder
+#Hack
+#November 18th, 2018
+
+rm(list=ls())
+library(ggplot2)
+library(alr4)
+library(dplyr)
+library(readr)
+
+#Load Per captia data
+OHPerCapIncomeData <- read_csv("Downloads/SOFTWARE/DataI:OHackathon/OHPerCapIncomeData.csv")
+View(OHPerCapIncomeData)
+
+OH3YrAvg <- (OHPerCapIncomeData$`Per capita personal income Dollars 2015`+
+  OHPerCapIncomeData$`Per capita personal income Dollars 2016`+
+  OHPerCapIncomeData$`Per capita personal income Dollars 2017`)/3
+
+
+OHPerCaptiaAvg.df <- data_frame(OHPerCapIncomeData$`Ohio Counties`,OH3YrAvg)
+names(OHPerCaptiaAvg.df) <- c("County/State","Avg. Per capita personal income (Dollars) 2015-17")
